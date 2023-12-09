@@ -1,3 +1,2 @@
-fastapi
-uvicorn
-tortoise-orm
+django
+djangorestframework
