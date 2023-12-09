@@ -5,3 +5,8 @@ class PlantModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Plant
         fields = '__all__'
+
+class TemperatureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Plant
+        fields = ('temperature',)
