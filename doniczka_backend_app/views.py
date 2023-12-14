@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.permissions import AllowAny
 from .models import Plant
-from .serializers import PlantModelSerializer, TemperatureSerializer
+from .serializers import PlantModelSerializer, TemperatureandHumiditySerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -12,7 +12,7 @@ class PlantViewSet(GenericViewSet):
 
     @action(detail=False, methods=['put'])
     def update_temp(self, request):
-        serializer = TemperatureSerializer(data=request.data)
+        serializer = TemperatureandHumiditySerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response('Temperatura zaktualizowana')
