@@ -15,6 +15,7 @@ class PlantViewSet(GenericViewSet):
         serialzier = PlantCreatingSerializer(data=request.data)
         serialzier.is_valid(raise_exception=True)
         serialzier.save()
+        return Response('Roślina zasadzona ;D')
 
     @action(detail=False, methods=['put'])
     def update_temp(self, request):
