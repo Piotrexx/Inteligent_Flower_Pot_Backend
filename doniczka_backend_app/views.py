@@ -23,3 +23,7 @@ class PlantViewSet(GenericViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response('Temperatura zaktualizowana')
+    
+    @action(detail=False, methods=['get'])
+    def get_info(self,request):
+        return Response(self.serializer_class(Plant.objects.all()).data)
