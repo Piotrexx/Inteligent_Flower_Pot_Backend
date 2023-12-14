@@ -10,3 +10,8 @@ class TemperatureandHumiditySerializer(serializers.ModelSerializer):
     class Meta:
         model = Plant
         fields = ('temperature','air_humidity')
+
+class PlantCreatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Plant
+        fields = ('plant_name','plant_specie')
