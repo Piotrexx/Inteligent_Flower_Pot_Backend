@@ -50,6 +50,7 @@ class PlantViewSet(GenericViewSet):
     def water_the_plants(self, request):
         led = LED(18)
         led.on()
-        sleep(5)
+        sleep(15)
         led.off()
+        sleep(15)
         return Response('Podlane !')
