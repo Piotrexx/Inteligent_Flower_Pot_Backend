@@ -28,10 +28,10 @@ class PlantViewSet(GenericViewSet):
     #     serializer.save()
     #     return Response('Temperatura zaktualizowana')
     
-    @action(detail=False, methods=['get'])
-    def get_info(self,request):
+    @action(detail=True, methods=['get'])
+    def get_info(self,request, pk):
         humidity, temperature = Adafruit_DHT.read_retry(self.sensor, self.pin)
         serializer = TemperatureandHumiditySerializer(data={'temperature':temperature, 'air_humidity':humidity})
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(self.serializer_class(Plant.objects.get(id=1)).data)
+        return Response(self.serializer_class(Plant.objects.get(id=pk)).data)
