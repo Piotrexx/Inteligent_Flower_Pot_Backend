@@ -17,7 +17,7 @@ class PlantViewSet(GenericViewSet):
     serializer_class = PlantModelSerializer
     sensor = Adafruit_DHT.DHT11
     pin = 4
-    led = LED(18)
+
     
     @action(detail=False, methods=['post'])
     def create_plant(self,request):
@@ -48,7 +48,8 @@ class PlantViewSet(GenericViewSet):
         
     @action(detail=False, methods=['get'])
     def water_the_plants(self, request):
-        self.led.on()
+        led = LED(18)
+        led.on()
         sleep(5)
-        self.led.off()
+        led.off()
         return Response('Podlane !')
