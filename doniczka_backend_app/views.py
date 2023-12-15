@@ -34,4 +34,4 @@ class PlantViewSet(GenericViewSet):
         serializer = TemperatureandHumiditySerializer(data={'temperature':temperature, 'air_humidity':humidity})
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(self.serializer_class(Plant.objects.all()).data)
+        return Response(self.serializer_class(Plant.objects.get(id=1)).data)
