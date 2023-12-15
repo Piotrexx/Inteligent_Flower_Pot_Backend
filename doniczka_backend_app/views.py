@@ -4,6 +4,7 @@ from .models import Plant
 from .serializers import PlantModelSerializer,PlantCreatingSerializer, TemperatureandHumiditySerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 import Adafruit_DHT
 
 class PlantViewSet(GenericViewSet):
@@ -30,8 +31,13 @@ class PlantViewSet(GenericViewSet):
     
     @action(detail=True, methods=['get'])
     def get_info(self,request, pk):
-        humidity, temperature = Adafruit_DHT.read_retry(self.sensor, self.pin)
-        serializer = TemperatureandHumiditySerializer(instance=Plant.objects.get(id=pk), data={'temperature':temperature, 'air_humidity':humidity})
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(self.serializer_class(Plant.objects.get(id=pk)).data)
+        try:
+            get_object_or_404(Plant, id=pk)
+            humidity, temperature = Adafruit_DHT.read_retry(self.sensor, self.pin)
+            serializer = TemperatureandHumiditySerializer(instance=Plant.objects.get(id=pk), data={'temperature':temperature, 'air_humidity':humidity})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(self.serializer_class(Plant.objects.get(id=pk)).data)
+        except:
+            return Response('Roślina nie znaleziona :(')
+        
