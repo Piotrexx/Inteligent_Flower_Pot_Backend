@@ -44,7 +44,7 @@ Przykład requestu:
 
 ```
 
-### update_temp
+<!-- ### update_temp
 
 Endpoint, który automatycznie sie aktualizuje, nie będzie trzeba go używać ale warto o nim wspomnieć.
 Przyjmuje tylko metodę **PUT**
@@ -59,12 +59,21 @@ Przykład requesta:
     "temperature":25.0,
     "air_humidity":57
 }
-```
+``` -->
 
 ### get_info
 
-Otrzymywanie informacji o roślinie.
+Otrzymywanie informacji o roślinie oraz automatycznie aktualizuje informację na temat temperatury i wilgoci.
 Przyjmuje tylko metodę GET
+Przyjmuje on argument w postaci id doniczki
 
 URL:
-[http://127.0.0.1:8000/plants/get_info/](http://127.0.0.1:8000/plants/get_info/)
+[http://127.0.0.1:8000/plants/{id}/get_info/](http://127.0.0.1:8000/plants/{id}/get_info/)
+
+
+### water_the_plants
+
+Endpoint narazie włącza pompę na 15 sekund.
+
+URL:
+[http://127.0.0.1:8000/plants/water_the_plants/](http://127.0.0.1:8000/plants/water_the_plants/)
