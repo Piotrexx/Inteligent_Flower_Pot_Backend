@@ -14,6 +14,10 @@ języka programowania [Python](https://www.python.org/) wraz z jego następując
  pip install -r requirements.txt
  ```
 
+Frontendowa część projektu (aplikacja):
+[inteligent-flower-pot-frontend](https://github.com/janekskr/inteligent-flower-pot-frontend)
+
+
 Części jakich użyliśmy:
 
  - [raspberry Pi zero W](https://botland.com.pl/moduly-i-zestawy-raspberry-pi-zero/20347-raspberry-pi-zero-2-w-512mb-ram-wifi-bt-42-5904422380700.html)
