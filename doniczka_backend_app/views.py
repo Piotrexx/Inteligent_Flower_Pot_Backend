@@ -31,7 +31,7 @@ class PlantViewSet(GenericViewSet):
     @action(detail=True, methods=['get'])
     def get_info(self,request, pk):
         humidity, temperature = Adafruit_DHT.read_retry(self.sensor, self.pin)
-        serializer = TemperatureandHumiditySerializer(data={'temperature':temperature, 'air_humidity':humidity})
+        serializer = TemperatureandHumiditySerializer(instance=Plant.objects.get(id=pk), data={'temperature':temperature, 'air_humidity':humidity})
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(self.serializer_class(Plant.objects.get(id=pk)).data)
