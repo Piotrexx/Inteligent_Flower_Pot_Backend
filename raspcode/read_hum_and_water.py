@@ -4,7 +4,7 @@ import board
 from gpiozero import LED
 
 def check():
-    pump = LED(18)
+    
 
     i2c_bus = board.I2C()
 
@@ -17,6 +17,7 @@ def check():
 
         temp = ss.get_temp()
         if int(hum) == 600:
+            pump = LED(18)
             print('test')
             pump.on()
             pump.off()
