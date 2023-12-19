@@ -55,21 +55,3 @@ class PlantViewSet(GenericViewSet):
         sleep(15)
         return Response('Podlane !')
     
-@asyncio.coroutine
-def check_humidity(request):
-    humidity = yield from get_humidity()
-    if int(humidity) == 600:
-        pump = LED(18)
-        print('test')
-        pump.on()
-        pump.off()
-        sleep(15) 
-    return Response(f'humidity: {humidity}')
-
-@asyncio.coroutine
-def get_humidity():
-    url = 'http://127.0.0.1:8000/humidity_check/'
-    headers = {'Content-type': 'application/json'}
-    response = yield from ClientSession().get(url=url, headers=headers)
-    data = yield from response.json()
-    return data['humidity']
