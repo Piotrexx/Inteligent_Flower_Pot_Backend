@@ -2,3 +2,5 @@ django
 djangorestframework
 Adafruit_Python_DHT
 gpiozero
+asyncio
+aiohttp
