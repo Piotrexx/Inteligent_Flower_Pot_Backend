@@ -16,7 +16,7 @@ class PlantCreatingSerializer(serializers.ModelSerializer):
         model = Plant
         fields = ('plant_name','plant_specie')
 
-class PlantEditingSerializer(serializers.ModelField):
+class PlantEditingSerializer(serializers.ModelSerializer):
     plant_name = serializers.CharField(required=False)
     plant_specie = serializers.CharField(required=False)
     class Meta:
