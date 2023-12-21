@@ -22,10 +22,6 @@ def water_plants():
         pump.on()
         pump.off()
         sleep(15)
-    pump = LED(18)
-    pump.on()
-    pump.off()
-    sleep(15)
     print("temp: " + str(temp) + "  moisture: " + str(hum))
 
 
