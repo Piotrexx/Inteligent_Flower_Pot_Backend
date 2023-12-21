@@ -16,7 +16,7 @@ def water_plants():
 
     hum = ss.moisture_read()
     temp = ss.get_temp()
-    if int(hum) < 400:
+    if int(hum) > 400:
         pump = LED(18)
         print('test')
         pump.on()
