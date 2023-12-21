@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'doniczka_backend_app',
-    'django_crontab'
+    'django_cron'
 ]
 
 MIDDLEWARE = [
@@ -125,5 +125,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-CRONJOBS = [('*/2 * * * *', 'doniczka_backend_app.cron.water_pants')]
+CRON_CLASSES = [
+    "doniczka_backend_app.cron.WaterPlants",
+    'doniczka_backend_app.cron.CheckHumAndTemperature'
+]
