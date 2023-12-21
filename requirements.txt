@@ -2,3 +2,4 @@ django
 djangorestframework
 Adafruit_Python_DHT
 gpiozero
+django_crontab

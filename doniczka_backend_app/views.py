@@ -5,7 +5,7 @@ from .serializers import PlantModelSerializer,PlantCreatingSerializer, Temperatu
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
-from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND, HTTP_400_BAD_REQUEST
+from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND, HTTP_400_BAD_REQUEST,HTTP_409_CONFLICT, HTTP_201_CREATED
 import Adafruit_DHT
 from gpiozero import LED
 from time import sleep
@@ -22,10 +22,14 @@ class PlantViewSet(GenericViewSet):
     
     @action(detail=False, methods=['post'])
     def create_plant(self,request):
-        serialzier = PlantCreatingSerializer(data=request.data)
-        serialzier.is_valid(raise_exception=True)
-        serialzier.save()
-        return Response('Roślina zasadzona ;D')
+        try:
+            get_object_or_404(Plant.objects.all())
+            return Response("Nie możesz posadzić nowej rośliny ponieważ jedna już jest posadzona", status=HTTP_409_CONFLICT)
+        except: 
+            serialzier = PlantCreatingSerializer(data=request.data)
+            serialzier.is_valid(raise_exception=True)
+            serialzier.save()
+            return Response('Roślina zasadzona ;D', status=HTTP_201_CREATED)
 
     # @action(detail=False, methods=['put'])
     # def update_temp(self, request):
@@ -35,15 +39,25 @@ class PlantViewSet(GenericViewSet):
     #     serializer.save()
     #     return Response('Temperatura zaktualizowana')
     
-    @action(detail=True, methods=['get'])
-    def get_info(self,request, pk):
+    @action(detail=False, methods=['put'])
+    def edit_plant(self, request):
         try:
-            get_object_or_404(Plant, id=pk)
-            humidity, temperature = Adafruit_DHT.read_retry(self.sensor, self.pin)
-            serializer = TemperatureandHumiditySerializer(instance=Plant.objects.get(id=pk), data={'temperature':temperature, 'air_humidity':humidity})
+            serializer = PlantCreatingSerializer(instance=Plant.objects.get(id=1),data=request.data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            return Response(self.serializer_class(Plant.objects.get(id=pk)).data, status=HTTP_200_OK)
+            return Response('Roślina przesadzona', status=HTTP_200_OK)
+        except:
+            return Response('Aby roślinę przesadzić trzeba ja najpierw zasadzić', status=HTTP_409_CONFLICT)
+        
+    @action(detail=False, methods=['get'])
+    def get_info(self,request):
+        try:
+            get_object_or_404(Plant, id=1)
+            humidity, temperature = Adafruit_DHT.read_retry(self.sensor, self.pin)
+            serializer = TemperatureandHumiditySerializer(instance=Plant.objects.get(id=1), data={'temperature':temperature, 'air_humidity':humidity})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(self.serializer_class(Plant.objects.get(id=1)).data, status=HTTP_200_OK)
         except:
             return Response('Roślina nie znaleziona :(', status=HTTP_404_NOT_FOUND)
         
