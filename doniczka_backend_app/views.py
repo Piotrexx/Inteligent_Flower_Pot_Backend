@@ -9,8 +9,6 @@ from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND, HTTP_400_BAD_
 import Adafruit_DHT
 from gpiozero import LED
 from time import sleep
-import asyncio
-from aiohttp import ClientSession
 
 class PlantViewSet(GenericViewSet):
     permission_classes = [AllowAny]
