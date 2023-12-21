@@ -25,17 +25,6 @@ def water_plants():
     print("temp: " + str(temp) + "  moisture: " + str(hum))
 
 
-def check_temperature():
-    pin = 4
-    sensor = Adafruit_DHT.DHT11
-    humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
-    data = {'temperature': temperature, 'air_humidity': humidity}
-    # print(f'Temp={temperature}*C  Humidity={humidity}%')
-    serializer = TemperatureandHumiditySerializer(instance=Plant.objects.get(id=1), data=data)
-    serializer.is_valid(raise_exception=True)
-    serializer.save()
-    print('Saved')
-    
 
 class WaterPlants(CronJobBase):
     RUN_EVERY_MINS = 2

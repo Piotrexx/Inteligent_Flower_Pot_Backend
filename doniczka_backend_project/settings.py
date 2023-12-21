@@ -132,5 +132,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRONJOBS = [
 ('*/2 * * * *', 'doniczka_backend_app.cron.water_plants'),
-('*/1 * * * *', 'doniczka_backend_app.cron.check_temperature'),
 ]
