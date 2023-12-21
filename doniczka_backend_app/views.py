@@ -37,15 +37,13 @@ class PlantViewSet(GenericViewSet):
     #     serializer.save()
     #     return Response('Temperatura zaktualizowana')
     
-    @action(detail=False, methods=['put'])
-    def edit_plant(self, request):
-        try:
-            serializer = PlantCreatingSerializer(instance=Plant.objects.get(id=1),data=request.data)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            return Response('Roślina przesadzona', status=HTTP_200_OK)
-        except:
-            return Response('Aby roślinę przesadzić trzeba ja najpierw zasadzić', status=HTTP_409_CONFLICT)
+    @action(detail=True, methods=['put'])
+    def edit_plant(self, request, pk):
+        serializer = PlantCreatingSerializer(instance=Plant.objects.get(id=pk),data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response('Roślina przesadzona', status=HTTP_200_OK)
+        
         
     @action(detail=True, methods=['get'])
     def get_info(self, request, pk):
