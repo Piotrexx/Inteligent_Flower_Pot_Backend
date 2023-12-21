@@ -22,3 +22,8 @@ class PlantEditingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Plant
         fields = ('plant_name', 'plant_specie')
+
+class GroundHumiditySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Plant
+        fields = ('ground_humidity',)
