@@ -47,17 +47,13 @@ class PlantViewSet(GenericViewSet):
         except:
             return Response('Aby roślinę przesadzić trzeba ja najpierw zasadzić', status=HTTP_409_CONFLICT)
         
-    @action(detail=False, methods=['get'])
-    def get_info(self,request):
-        try:
-            get_object_or_404(Plant, id=1)
-            humidity, temperature = Adafruit_DHT.read_retry(self.sensor, self.pin)
-            serializer = TemperatureandHumiditySerializer(instance=Plant.objects.get(id=1), data={'temperature':temperature, 'air_humidity':humidity})
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            return Response(self.serializer_class(Plant.objects.get(id=1)).data, status=HTTP_200_OK)
-        except:
-            return Response('Roślina nie znaleziona :(', status=HTTP_404_NOT_FOUND)
+    @action(detail=True, methods=['get'])
+    def get_info(self,request, pk):
+        humidity, temperature = Adafruit_DHT.read_retry(self.sensor, self.pin)
+        serializer = TemperatureandHumiditySerializer(instance=Plant.objects.get(id=pk), data={'temperature':temperature, 'air_humidity':humidity})
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(self.serializer_class(Plant.objects.get(id=pk)).data, status=HTTP_200_OK)
         
     @action(detail=False, methods=['get'])
     def water_the_plants(self, request):
