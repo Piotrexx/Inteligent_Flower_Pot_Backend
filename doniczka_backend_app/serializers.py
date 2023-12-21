@@ -15,3 +15,10 @@ class PlantCreatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Plant
         fields = ('plant_name','plant_specie')
+
+class PlantEditingSerializer(serializers.ModelField):
+    plant_name = serializers.CharField(required=False)
+    plant_specie = serializers.CharField(required=False)
+    class Meta:
+        model = Plant
+        fields = ('plant_name', 'plant_specie')

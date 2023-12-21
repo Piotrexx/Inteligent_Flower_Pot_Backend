@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.permissions import AllowAny
 from .models import Plant
-from .serializers import PlantModelSerializer,PlantCreatingSerializer, TemperatureandHumiditySerializer
+from .serializers import PlantModelSerializer,PlantEditingSerializer,PlantCreatingSerializer, TemperatureandHumiditySerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
@@ -39,7 +39,7 @@ class PlantViewSet(GenericViewSet):
     
     @action(detail=True, methods=['put'])
     def edit_plant(self, request, pk):
-        serializer = PlantCreatingSerializer(instance=Plant.objects.get(id=pk),data=request.data)
+        serializer = PlantEditingSerializer(instance=Plant.objects.get(id=pk),data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response('Roślina przesadzona', status=HTTP_200_OK)
