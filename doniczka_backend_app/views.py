@@ -29,9 +29,9 @@ class PlantViewSet(GenericViewSet):
             serialzier.save()
             return Response('Roślina zasadzona ;D', status=HTTP_201_CREATED)
     
-    @action(detail=True, methods=['put'])
-    def edit_plant(self, request, pk):
-        serializer = PlantEditingSerializer(instance=Plant.objects.get(id=pk),data=request.data)
+    @action(detail=False, methods=['put'])
+    def edit_plant(self, request):
+        serializer = PlantEditingSerializer(instance=Plant.objects.get(id=1),data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response('Roślina przesadzona', status=HTTP_200_OK)
@@ -40,8 +40,8 @@ class PlantViewSet(GenericViewSet):
     @action(detail=False, methods=['get'])
     def get_info(self, request):
         humidity, temperature = Adafruit_DHT.read_retry(self.sensor, self.pin)
-        print(humidity)
-        print(temperature)
+        # print(humidity)
+        # print(temperature)
         serializer = TemperatureandHumiditySerializer(instance=Plant.objects.get(id=1), data={'temperature':temperature, 'air_humidity':humidity})
         serializer.is_valid(raise_exception=True)
         serializer.save()
