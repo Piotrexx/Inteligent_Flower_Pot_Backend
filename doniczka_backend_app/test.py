@@ -3,10 +3,10 @@ from time import sleep
 import board
 from gpiozero import LED
 import Adafruit_DHT
-from .serializers import GroundHumiditySerializer
+from doniczka_backend_app.serializers import GroundHumiditySerializer
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
-from .models import Plant
+from doniczka_backend_app.models import Plant
 
 def water_plants():
     i2c_bus = board.I2C()
