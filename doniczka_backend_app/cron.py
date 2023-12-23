@@ -18,7 +18,7 @@ def water_plants():
     serializer = GroundHumiditySerializer(instance=Plant.objects.get(id=1), data={'ground_humidity':hum})
     serializer.is_valid(raise_exception=True)
     serializer.save()
-    if int(hum) > 400:
+    if int(hum) < 400:
         pump = LED(18)
         print('test')
         pump.on()
