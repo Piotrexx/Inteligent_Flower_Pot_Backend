@@ -3,10 +3,10 @@ from time import sleep
 import board
 from gpiozero import LED
 import Adafruit_DHT
-from ..doniczka_backend_app.serializers import GroundHumiditySerializer
+from doniczka_backend_app import serializers
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
-from ..doniczka_backend_app.models import Plant
+from doniczka_backend_app import models
 
 def check():
     
@@ -16,7 +16,7 @@ def check():
 
     hum = ss.moisture_read()
     temp = ss.get_temp()
-    serializer = GroundHumiditySerializer(instance=Plant.objects.get(id=1), data={'ground_humidity':hum})
+    serializer = serializers.GroundHumiditySerializer(instance=models.Plant.objects.get(id=1), data={'ground_humidity':hum})
     serializer.is_valid(raise_exception=True)
     serializer.save()
     
