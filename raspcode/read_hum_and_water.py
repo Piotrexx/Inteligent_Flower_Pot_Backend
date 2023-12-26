@@ -16,7 +16,7 @@ def check():
 
 
         temp = ss.get_temp()
-        if int(hum) == 600:
+        if int(hum) < 600:
             pump = LED(18)
             print('test')
             pump.on()
