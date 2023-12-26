@@ -24,3 +24,5 @@ def check():
             sleep(15)
         print("temp: " + str(temp) + "  moisture: " + str(hum))
         sleep(1)
+
+check()
