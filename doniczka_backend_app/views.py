@@ -10,6 +10,7 @@ import Adafruit_DHT
 from gpiozero import LED, Button
 from time import sleep
 from raspcode.checking_water_level import check_water_level
+
 class PlantViewSet(GenericViewSet):
     permission_classes = [AllowAny]
     queryset = Plant.objects.all()
@@ -40,13 +41,6 @@ class PlantViewSet(GenericViewSet):
     @action(detail=False, methods=['get'])
     def get_info(self, request):
         humidity, temperature = Adafruit_DHT.read_retry(self.sensor, self.pin)
-        # print(humidity)
-        # print(temperature)
-        # water_sensor = Button(16)
-        # if water_sensor.is_pressed == True:
-        #         level = True
-        # else:
-        #         level = False
         serializer = TemperatureandHumidityWaterLevelSerializer(instance=Plant.objects.get(id=1), data={'temperature':temperature, 'air_humidity':humidity, 'water_level':check_water_level()})
         serializer.is_valid(raise_exception=True)
         serializer.save()

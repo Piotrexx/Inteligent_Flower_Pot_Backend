@@ -26,6 +26,35 @@ Części jakich użyliśmy:
  - [Moduł przekaźnika 1 kanał z optoizolacją - styki 10A/250VAC cewka 5V](https://botland.com.pl/przekazniki-przekazniki-arduino/1997-modul-przekaznika-1-kanal-z-optoizolacja-styki-10a-250vac-cewka-5v-5904422359096.html)
  - [Czujnik poziomu cieczy z pływakiem - kontaktron](https://botland.com.pl/czujniki-poziomu-cieczy/7244-czujnik-poziomu-cieczy-z-plywakiem-kontaktron-5904422310035.html)
 
+## Włączenie serwera na raspberry pi
+
+By włączyć działający serwer należy wpisać poniższe komendy:
+
+ - Dodawanie migracji
+
+```shell
+python manage.py makemigrations doniczka_backend_app
+```
+
+- Migracja modelu do bazy danych
+
+```shell
+python manage.py migrate
+```
+
+- Dodanie zadania do crontabu *(dzięki temu raspberry będzie sprawdzał co 2 minuty jaka jest wilgotność gleby oraz będzię ją podlewać jeśli będzie trzeba)*
+
+```shell
+python manage.py crontab add
+```
+
+- Uruchomienie servera *(dzięki wpisaniu na końcu komendy 0.0.0.0:8000 będzie można kożystać z serwera w sieci lokalnej)*
+```shell
+python manage.py runserver 0.0.0.0:8000
+```
+
+
+
 ## Dokumentacja routingu (url)
 
 ### create_plant
@@ -44,36 +73,44 @@ Przykład requestu:
 
 ```
 
-<!-- ### update_temp
-
-Endpoint, który automatycznie sie aktualizuje, nie będzie trzeba go używać ale warto o nim wspomnieć.
-Przyjmuje tylko metodę **PUT**
-
-URL:
-[http://127.0.0.1:8000/plants/update_temp/](http://127.0.0.1:8000/plants/update_temp/)
-
-Przykład requesta:
-
-```json
-{
-    "temperature":25.0,
-    "air_humidity":57
-}
-``` -->
 
 ### get_info
 
-Otrzymywanie informacji o roślinie oraz automatycznie aktualizuje informację na temat temperatury i wilgoci.
+Otrzymywanie informacji o roślinie oraz automatycznie aktualizuje informację na temat temperatury, wilgoci i ilości wody w doniczce.
 Przyjmuje tylko metodę GET
-Przyjmuje on argument w postaci id doniczki
+
 
 URL:
-[http://127.0.0.1:8000/plants/{id}/get_info/](http://127.0.0.1:8000/plants/{id}/get_info/)
+[http://127.0.0.1:8000/plants/get_info/](http://127.0.0.1:8000/plants/{id}/get_info/)
 
 
-### water_the_plants
+### edit_plant
 
-Endpoint narazie włącza pompę na 15 sekund.
+Endpoint do edycji rośliny (nazwa, rodzaj).
+Przyjmuje tylko metodę PUT.
+
+Przykładowe zapytanie:
+
+```json
+{
+    "plant_name": "Moja roślinka",
+    "plant_specie": "Kaktus"
+}
+```
+
+Nie trzeba wprowadzać wszystkiego można np. tylko wpisać nazwę rośliny.
 
 URL:
-[http://127.0.0.1:8000/plants/water_the_plants/](http://127.0.0.1:8000/plants/water_the_plants/)
+[http://127.0.0.1:8000/plants/edit_plant/](http://127.0.0.1:8000/plants/edit_plant/)
+
+## Opis działania doniczki
+
+### Funkcje doniczki wraz z aplikacją:
+
+ - Automatycznie sprawdzanie wilgotności gleby oraz automatyczne podlewanie gdy zajdzie taka potrzeba
+ 
+ - Monitorowanie temperatury, wilgotności powietrza.
+
+ - Monitorowanie poziomu wody w doniczce oraz informowanie użytkownika o tym gdy trzeba będzie ją uzupełnić
+
+ - Możliwość edytcji/zmiany nazwy oraz gatunku rośliny.
