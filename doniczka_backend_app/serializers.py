@@ -6,10 +6,10 @@ class PlantModelSerializer(serializers.ModelSerializer):
         model = Plant
         fields = '__all__'
 
-class TemperatureandHumiditySerializer(serializers.ModelSerializer):
+class TemperatureandHumidityWaterLevelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Plant
-        fields = ('temperature','air_humidity')
+        fields = ('temperature','air_humidity', 'water_level')
 
 class PlantCreatingSerializer(serializers.ModelSerializer):
     class Meta:

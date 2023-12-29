@@ -1,15 +1,15 @@
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.permissions import AllowAny
 from .models import Plant
-from .serializers import PlantModelSerializer,PlantEditingSerializer,PlantCreatingSerializer, TemperatureandHumiditySerializer
+from .serializers import PlantModelSerializer,PlantEditingSerializer,PlantCreatingSerializer, TemperatureandHumidityWaterLevelSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND, HTTP_400_BAD_REQUEST,HTTP_409_CONFLICT, HTTP_201_CREATED
 import Adafruit_DHT
-from gpiozero import LED
+from gpiozero import LED, Button
 from time import sleep
-
+from raspcode.checking_water_level import check_water_level
 class PlantViewSet(GenericViewSet):
     permission_classes = [AllowAny]
     queryset = Plant.objects.all()
@@ -42,7 +42,12 @@ class PlantViewSet(GenericViewSet):
         humidity, temperature = Adafruit_DHT.read_retry(self.sensor, self.pin)
         # print(humidity)
         # print(temperature)
-        serializer = TemperatureandHumiditySerializer(instance=Plant.objects.get(id=1), data={'temperature':temperature, 'air_humidity':humidity})
+        # water_sensor = Button(16)
+        # if water_sensor.is_pressed == True:
+        #         level = True
+        # else:
+        #         level = False
+        serializer = TemperatureandHumidityWaterLevelSerializer(instance=Plant.objects.get(id=1), data={'temperature':temperature, 'air_humidity':humidity, 'water_level':check_water_level()})
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(self.serializer_class(Plant.objects.get(id=1)).data, status=HTTP_200_OK)
