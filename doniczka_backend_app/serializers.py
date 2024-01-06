@@ -27,3 +27,8 @@ class GroundHumiditySerializer(serializers.ModelSerializer):
     class Meta:
         model = Plant
         fields = ('ground_humidity',)
+
+class LastWateringSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Plant
+        fields = ('last_watering',)
