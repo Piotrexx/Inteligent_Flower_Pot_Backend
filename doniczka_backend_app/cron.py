@@ -7,8 +7,8 @@ import Adafruit_DHT
 from rest_framework.response import Response
 # from serializers import LastWateringSerializer
 from django.utils import timezone
-from .models import Plant
-from .serializers import LastWateringSerializer
+from models import Plant
+from serializers import LastWateringSerializer
 
 
 
