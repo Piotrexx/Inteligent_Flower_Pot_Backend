@@ -42,7 +42,8 @@ def water_plants():
                 use_pump_and_save(plant=plant, now=now)
 
 
-
+if __name__ == '__main__':
+    water_plants()
 
 
 
