@@ -7,8 +7,8 @@ import Adafruit_DHT
 from rest_framework.response import Response
 # from serializers import LastWateringSerializer
 from django.utils import timezone
-import models
-import serializers
+from .models import Plant
+from .serializers import LastWateringSerializer
 
 
 
@@ -17,7 +17,7 @@ def use_pump_and_save(plant, now):
     pump.on()
     pump.off()
     sleep(15)        
-    serializer = serializers.LastWateringSerializer(instance=plant, data={'last_watering': now})       
+    serializer = LastWateringSerializer(instance=plant, data={'last_watering': now})       
     serializer.is_valid(raise_exception=True)
     serializer.save()
 
@@ -26,7 +26,7 @@ def water_plants():
     i2c_bus = board.I2C()
     
     ss = Seesaw(i2c_bus, addr=0x36)
-    plant = models.Plant.objects.get(id=1)
+    plant = Plant.objects.get(id=1)
     plant_type = plant.plant_specie
     now = timezone.now
     hum = ss.moisture_read()
