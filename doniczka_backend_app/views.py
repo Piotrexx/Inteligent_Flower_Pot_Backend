@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.permissions import AllowAny
 from .models import Plant
-from .serializers import PlantModelSerializer,PlantEditingSerializer,PlantCreatingSerializer, TemperatureandHumidityWaterLevelSerializer
+from .serializers import PlantModelSerializer,PlantEditingSerializer,PlantCreatingSerializer, TemperatureandHumidityWaterLevelSerializer, LastWateringSerializer, GetFlowerTypeSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
@@ -58,3 +58,17 @@ class PlantViewSet(GenericViewSet):
         sleep(15)
         return Response('Podlane !')
     
+    @action(detail=False, methods=['get'])
+    def get_date(self, request):
+        return Response(LastWateringSerializer(Plant.objects.get(id=1)).data, status=HTTP_200_OK)
+    
+    @action(detail=False, methods=['put'])
+    def update_date(self, request):
+        serializer = LastWateringSerializer(instance=Plant.objects.get(id=1), data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response('Data Updated', status=HTTP_200_OK)
+    
+    @action(detail=False, methods=['get'])
+    def get_type(self, request):
+        return Response(GetFlowerTypeSerializer(Plant.objects.get(id=1)).data, status=HTTP_200_OK)

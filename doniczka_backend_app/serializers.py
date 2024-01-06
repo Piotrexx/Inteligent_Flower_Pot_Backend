@@ -32,3 +32,8 @@ class LastWateringSerializer(serializers.ModelSerializer):
     class Meta:
         model = Plant
         fields = ('last_watering',)
+
+class GetFlowerTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Plant
+        fields = ('plant_specie',)
