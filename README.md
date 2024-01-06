@@ -61,7 +61,7 @@ python manage.py runserver 0.0.0.0:8000
 Tworzenie rośliny.
 
 URL:
-[http://127.0.0.1:8000/plants/create_plant/](http://127.0.0.1:8000/plants/create_plant/)
+[http://pi:8000/plants/create_plant/](http://pi:8000/plants/create_plant/)
 
 Przykład requestu:
 
@@ -81,7 +81,7 @@ Przyjmuje tylko metodę GET
 
 
 URL:
-[http://127.0.0.1:8000/plants/get_info/](http://127.0.0.1:8000/plants/{id}/get_info/)
+[http://pi:8000/plants/get_info/](http://pi:8000/plants/{id}/get_info/)
 
 
 ### edit_plant
@@ -101,7 +101,7 @@ Przykładowe zapytanie:
 Nie trzeba wprowadzać wszystkiego można np. tylko wpisać nazwę rośliny.
 
 URL:
-[http://127.0.0.1:8000/plants/edit_plant/](http://127.0.0.1:8000/plants/edit_plant/)
+[http://pi:8000/plants/edit_plant/](http://pi:8000/plants/edit_plant/)
 
 ## Opis działania doniczki
 
