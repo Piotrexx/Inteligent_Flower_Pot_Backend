@@ -3,17 +3,21 @@ from time import sleep
 import board
 from gpiozero import LED
 import Adafruit_DHT
-from models import Plant
+# from models import Plant
 from rest_framework.response import Response
-from serializers import LastWateringSerializer
-from datetime import datetime
+# from serializers import LastWateringSerializer
+from django.utils import timezone
+import models
+import serializers
+
+
 
 def use_pump_and_save(plant, now):
     pump = LED(18)
     pump.on()
     pump.off()
     sleep(15)        
-    serializer = LastWateringSerializer(instance=plant, data={'last_watering': now.strftime("%d/%m/%Y %H:%M:%S")})       
+    serializer = serializers.LastWateringSerializer(instance=plant, data={'last_watering': now})       
     serializer.is_valid(raise_exception=True)
     serializer.save()
 
@@ -22,9 +26,9 @@ def water_plants():
     i2c_bus = board.I2C()
     
     ss = Seesaw(i2c_bus, addr=0x36)
-    plant = Plant.objects.get(id=1)
+    plant = models.Plant.objects.get(id=1)
     plant_type = plant.plant_specie
-    now = datetime.now()
+    now = timezone.now
     hum = ss.moisture_read()
     temp = ss.get_temp()
 
@@ -36,7 +40,7 @@ def water_plants():
     if str(plant_type).lower() == 'kaktus':
         if int(hum) < 400:
             if plant.last_watering != 0:
-                if int(plant.last_watering[3:5]) < int(now.strftime("%d/%m/%Y %H:%M:%S")[3:5]):
+                if int(plant.last_watering[8:10]) < int(now)[8:10]:
                     use_pump_and_save(plant=plant, now=now)
             else:
                 use_pump_and_save(plant=plant, now=now)

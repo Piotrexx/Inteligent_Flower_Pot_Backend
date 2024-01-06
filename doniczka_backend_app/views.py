@@ -40,11 +40,15 @@ class PlantViewSet(GenericViewSet):
         
     @action(detail=False, methods=['get'])
     def get_info(self, request):
-        humidity, temperature = Adafruit_DHT.read_retry(self.sensor, self.pin)
-        serializer = TemperatureandHumidityWaterLevelSerializer(instance=Plant.objects.get(id=1), data={'temperature':temperature, 'air_humidity':humidity, 'water_level':check_water_level()})
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(self.serializer_class(Plant.objects.get(id=1)).data, status=HTTP_200_OK)
+        try:
+            get_object_or_404(Plant, id=1)
+            humidity, temperature = Adafruit_DHT.read_retry(self.sensor, self.pin)
+            serializer = TemperatureandHumidityWaterLevelSerializer(instance=Plant.objects.get(id=1), data={'temperature':temperature, 'air_humidity':humidity, 'water_level':check_water_level()})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(self.serializer_class(Plant.objects.get(id=1)).data, status=HTTP_200_OK)
+        except:
+            return Response('Najpierw trzeba stworzyć doniczkę', status=HTTP_404_NOT_FOUND)
         
     @action(detail=False, methods=['get'])
     def water_the_plants(self, request):
