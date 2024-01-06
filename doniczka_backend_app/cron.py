@@ -4,8 +4,9 @@ import board
 from gpiozero import LED
 import Adafruit_DHT
 from rest_framework.response import Response
-from django.utils import timezone
+# from django.utils import timezone
 import requests
+from datetime import datetime
 
 
 
@@ -26,7 +27,7 @@ def water_plants():
     print(plant_type)
     last_watering = requests.get(url=base_url+'get_date').json()
     print(type(last_watering['last_watering']))
-    now = timezone.now
+    now = datetime.now()
     print(now)
     print(type(now))
     hum = ss.moisture_read()
@@ -40,7 +41,7 @@ def water_plants():
     if plant_type['plant_specie'].lower() == 'kaktus':
         if int(hum) < 400:
             if last_watering['last_watering'] != 0:
-                if int(last_watering['last_watering'][8:10]) < int(now)[8:10]:
+                if int(last_watering['last_watering'][8:10]) < int(now.strftime("%d/%m/%Y %H:%M:%S")[3:5]):
                     use_pump_and_save(base_url=base_url, now=now)
             else:
                 use_pump_and_save(base_url=base_url, now=now)
