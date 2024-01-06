@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator 
-from time import timezone
+from django.utils import timezone
 
 class Plant(models.Model):
 
