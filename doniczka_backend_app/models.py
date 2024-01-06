@@ -15,4 +15,4 @@ class Plant(models.Model):
     air_humidity = models.IntegerField(default=0)
     water_level = models.BooleanField(default=False)
     temperature = models.FloatField(default=0)
-    last_watering = models.DateTimeField(default="")
+    last_watering = models.DateTimeField()
