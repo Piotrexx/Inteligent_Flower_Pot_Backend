@@ -23,7 +23,9 @@ def water_plants():
     ss = Seesaw(i2c_bus, addr=0x36)
     base_url = 'http://127.0.0.1:8000/plants/'
     plant_type = requests.get(url=base_url+'get_type/').json()
+    print(plant_type)
     last_watering = requests.get(url=base_url+'get_date').json()
+    print(last_watering)
     now = timezone.now
     hum = ss.moisture_read()
     temp = ss.get_temp()
