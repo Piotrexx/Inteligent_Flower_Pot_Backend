@@ -25,7 +25,7 @@ def water_plants():
     plant_type = requests.get(url=base_url+'get_type/').json()
     print(plant_type)
     last_watering = requests.get(url=base_url+'get_date').json()
-    print(last_watering)
+    print(type(last_watering))
     now = timezone.now
     hum = ss.moisture_read()
     temp = ss.get_temp()
