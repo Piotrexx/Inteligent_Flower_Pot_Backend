@@ -3,7 +3,7 @@ from time import sleep
 import board
 from gpiozero import LED
 import Adafruit_DHT
-from .serializers import GroundHumiditySerializer
+from serializers import GroundHumiditySerializer
 from rest_framework.response import Response
 def water_plants():
     i2c_bus = board.I2C()
