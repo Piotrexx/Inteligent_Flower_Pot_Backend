@@ -35,7 +35,7 @@ def water_plants():
         if int(hum) < 400:
             use_pump_and_save(base_url=base_url, now=now)
     
-    if plant_type.plant_type.lower() == 'kaktus':
+    if plant_type['plant_specie'].lower() == 'kaktus':
         if int(hum) < 400:
             if last_watering['last_watering'] != 0:
                 if int(last_watering['last_watering'][8:10]) < int(now)[8:10]:
