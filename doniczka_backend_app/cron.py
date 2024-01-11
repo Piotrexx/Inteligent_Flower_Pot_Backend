@@ -33,7 +33,8 @@ def water_plants():
     hum = ss.moisture_read()
     temp = ss.get_temp()
     update_ground = requests.put(url=base_url+'update_ground/', data={'ground_humidity': hum})
-    if str(plant_type).lower() == 'kawa':
+    
+    if str(plant_type['plant_specie']).lower() == 'kawa':
     
         if int(hum) < 400:
             use_pump_and_save(base_url=base_url, now=now)
