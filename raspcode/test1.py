@@ -16,3 +16,4 @@ def test():
         test()
 
 
+test()
