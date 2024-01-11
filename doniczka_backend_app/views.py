@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.permissions import AllowAny
 from .models import Plant
-from .serializers import PlantModelSerializer,PlantEditingSerializer,PlantCreatingSerializer, TemperatureandHumidityWaterLevelSerializer, LastWateringSerializer, GetFlowerTypeSerializer
+from .serializers import PlantModelSerializer,PlantEditingSerializer,GroundHumiditySerializer,PlantCreatingSerializer, TemperatureandHumidityWaterLevelSerializer, LastWateringSerializer, GetFlowerTypeSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
@@ -72,3 +72,10 @@ class PlantViewSet(GenericViewSet):
     @action(detail=False, methods=['get'])
     def get_type(self, request):
         return Response(GetFlowerTypeSerializer(Plant.objects.get(id=1)).data, status=HTTP_200_OK)
+    
+    @action(detail=False, methods=['put'])
+    def update_ground(self, request):
+        serializer = GroundHumiditySerializer(instance=Plant.objects.get(id=1), data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response('Updated !', status=HTTP_200_OK)

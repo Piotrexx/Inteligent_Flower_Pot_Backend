@@ -37,3 +37,9 @@ class GetFlowerTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Plant
         fields = ('plant_specie',)
+
+
+class SaveGroundHumidity(serializers.ModelSerializer):
+    class Meta:
+        model = Plant
+        fields = ('ground_humidity',)

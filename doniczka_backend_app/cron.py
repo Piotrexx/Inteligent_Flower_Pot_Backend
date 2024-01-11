@@ -32,7 +32,7 @@ def water_plants():
     print(type(now))
     hum = ss.moisture_read()
     temp = ss.get_temp()
-
+    update_ground = requests.put(url=base_url+'update_ground', data={'ground_humidity': hum})
     if str(plant_type).lower() == 'kawa':
     
         if int(hum) < 400:
