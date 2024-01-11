@@ -25,14 +25,14 @@ def water_plants():
     base_url = 'http://127.0.0.1:8000/plants/'
     plant_type = requests.get(url=base_url+'get_type/').json()
     print(plant_type)
-    last_watering = requests.get(url=base_url+'get_date').json()
+    last_watering = requests.get(url=base_url+'get_date/').json()
     print(type(last_watering['last_watering']))
     now = datetime.now()
     print(now)
     print(type(now))
     hum = ss.moisture_read()
     temp = ss.get_temp()
-    update_ground = requests.put(url=base_url+'update_ground', data={'ground_humidity': hum})
+    update_ground = requests.put(url=base_url+'update_ground/', data={'ground_humidity': hum})
     if str(plant_type).lower() == 'kawa':
     
         if int(hum) < 400:
