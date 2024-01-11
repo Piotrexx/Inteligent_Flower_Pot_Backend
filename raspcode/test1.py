@@ -7,5 +7,6 @@ from gpiozero import LED
 while True:
     sleep(5)
     pump = LED(18)
-    pump.off()
+
     sleep(5)
+    pump.off()
