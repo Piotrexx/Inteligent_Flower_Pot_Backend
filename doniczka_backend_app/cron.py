@@ -22,7 +22,7 @@ def water_plants():
     i2c_bus = board.I2C()
     
     ss = Seesaw(i2c_bus, addr=0x36)
-    base_url = 'http://192.168.0.222:8000/plants/'
+    base_url = 'http://127.0.0.1:8000/plants/'
     plant_type = requests.get(url=base_url+'get_type/').json()
     print(plant_type)
     last_watering = requests.get(url=base_url+'get_date').json()
