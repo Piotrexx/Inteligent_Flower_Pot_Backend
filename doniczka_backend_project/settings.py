@@ -125,10 +125,12 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ORIGIN_WHITELIST = (
-    'http://localhost:3000',
-    'http://localhost:8081',
-)
+# CORS_ORIGIN_WHITELIST = (
+#     'http://localhost:3000',
+#     'http://localhost:8081',
+# )
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 CRONJOBS = [
 ('*/2 * * * *', 'doniczka_backend_app.cron.water_plants'),
